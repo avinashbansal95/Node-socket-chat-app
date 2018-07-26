@@ -7,27 +7,6 @@
 <body>
 <p>Welcome to the chat app</p>
 <script src ="/socket.io/socket.io.js"> </script>
-<script> 
-	var socket = io();
-socket.on('connect', function ()
-{
-console.log("Connected to server");
-
-socket.emit('createMessage',{
-    to:'Andrew',
-    text:'cool stuff!!'
-});
-});
-
-socket.on('disconnect', function () 
-{
-console.log("Disconnected from the server")
-})
-
-socket.on('newMessage', function (message) 
-{
-console.log('new Message',message);
-})
-</script>
+<script src="/js/index.js"> </script>
 </body>
 </html>
