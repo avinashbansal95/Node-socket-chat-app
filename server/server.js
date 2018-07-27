@@ -16,15 +16,38 @@ io.on('connection', (socket) =>
 {
     console.log("New user connected");
 
+    //For greeting individual user
+    socket.emit('newMessage',{
+        from:'Admin',
+        text:'Welcome to the chat app',
+        createdAt: new Date().getTime()
+    });
+
+    //Emit to everyone except who joined
+    socket.broadcast.emit('newMessage',{
+        from:'Admin',
+        text:'New user joined!!',
+        createdAt: new Date().getTime()
+    })
+
   
 socket.on('createMessage',function(message)
 {
      console.log('createMessage',message);
+     //User send a msg and server send it very user by io.emit
+
      io.emit('newMessage',{
          from: message.from,
          text: message.text,
          createdAt: new Date().getTime()
      });
+
+    //if we want to send msg everyone except ourself we hve to use below syntax
+    // socket.broadcast.emit('newMessage',{
+    //     from: message.from,
+    //      text: message.text,
+    //      createdAt: new Date().getTime()
+    // })
 });
 
 
