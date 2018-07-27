@@ -24,12 +24,13 @@ io.on('connection', (socket) =>
     socket.broadcast.emit('newMessage',generateMessage('Admin', 'New user joined!!'))
 
   
-socket.on('createMessage',function(message)
+socket.on('createMessage',function(message,callback)
 {
      console.log('createMessage',message);
      //User send a msg and server send it very user by io.emit
 
      io.emit('newMessage',generateMessage(message.from, message.text));
+     callback('This is from the server');
 
     //if we want to send msg everyone except ourself we hve to use below syntax
     // socket.broadcast.emit('newMessage',{

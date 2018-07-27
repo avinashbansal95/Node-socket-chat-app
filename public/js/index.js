@@ -13,3 +13,11 @@ socket.on('newMessage', function (message)
 {
 console.log('new Message',message);
 })
+
+socket.emit('createMessage',{
+    from:'avinashbansal',
+    text:'What is going on'
+},function(data)
+{
+    console.log(data,':Got it')
+});
