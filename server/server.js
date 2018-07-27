@@ -30,7 +30,7 @@ socket.on('createMessage',function(message,callback)
      //User send a msg and server send it very user by io.emit
 
      io.emit('newMessage',generateMessage(message.from, message.text));
-     callback('This is from the server');
+     callback();
 });
 
 socket.on('createLocationMessage',(coords) =>
