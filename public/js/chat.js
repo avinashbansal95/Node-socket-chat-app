@@ -1,7 +1,4 @@
 
-
-
-
 var socket = io();
 
 function scrollToBottom () {
@@ -22,6 +19,19 @@ function scrollToBottom () {
 }
 
 socket.on('connect', function () {
+  var params = jQuery.deparam(window.location.search);
+  //This event will emmited by the client and listened by the server
+  socket.emit('join',params, function(err)
+{
+  if(err)
+  {
+    alert(err);
+    window.location.href = '/';
+  }
+  else{
+    console.log("No errors");
+  }
+})
   console.log('Connected to server');
 });
 
