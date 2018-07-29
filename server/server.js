@@ -18,11 +18,7 @@ io.on('connection', (socket) =>
 {
     console.log("New user connected");
 
-    //For greeting individual user
-    socket.emit('newMessage',generateMessage('Admin', 'Welcome to the chat app'));
-
-    //Emit to everyone except who joined
-    socket.broadcast.emit('newMessage',generateMessage('Admin', 'New user joined!!'))
+    
 
     socket.on('join',(params,callback) =>
 {
@@ -30,6 +26,18 @@ io.on('connection', (socket) =>
     {
         callback("Valid name and valid room name are required!!");
     }
+     
+    socket.join(params.room);
+    //io.emit->io.to('ded').emit
+    //socket.broadcast.emit ->socket.broadcast.to('dede').emit
+
+//For greeting individual user
+socket.emit('newMessage',generateMessage('Admin', 'Welcome to the chat app'));
+
+//Emit to everyone who is in the same room
+socket.broadcast.to(params.room).emit('newMessage',generateMessage('Admin', `${params.name} has joined!!`))
+
+
     callback();
 })
 
