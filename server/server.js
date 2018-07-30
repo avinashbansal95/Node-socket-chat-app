@@ -28,9 +28,24 @@ io.on('connection', (socket) =>
     {
         return callback("Valid name and valid room name are required!!");
     }
-     
+    params.room = params.room.toLowerCase();
     socket.join(params.room);
+    //Checking if two user of same name exist in chat
+    if( users.users.length > 0)
+    {
+
+        const check = users.users.filter((user) => user.name === params.name && user.room === params.room);
+        if(check.length > 0)
+        {
+            return callback("User of this name already exist in chat room");
+            
+        }
+    }
+   
+    
+    
     users.removeUser(socket.id);
+    
     users.addUser(socket.id, params.name, params.room)
 
    io.to(params.room).emit('updateUserList', users.getUserList(params.room))
